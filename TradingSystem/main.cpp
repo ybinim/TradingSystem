@@ -5,7 +5,7 @@ TEST(TestTradingSystem, TEST_KIWER_LOGIN) {
 	brocker.selectStockBrocker("KIWER");
 	AutoTradingSystem tradingSystem{ &brocker };
 	
-	EXPECT_NO_THROW(brocker.login("USER", "PASSWORD"));
+	EXPECT_NO_THROW(tradingSystem.login("USER", "PASSWORD"));
 }
 
 TEST(TestTradingSystem, TEST_NEMO_LOGIN) {
@@ -13,7 +13,7 @@ TEST(TestTradingSystem, TEST_NEMO_LOGIN) {
 	brocker.selectStockBrocker("NEMO");
 	AutoTradingSystem tradingSystem{ &brocker };
 
-	EXPECT_NO_THROW(brocker.certification("USER", "PASSWORD"));
+	EXPECT_NO_THROW(tradingSystem.certification("USER", "PASSWORD"));
 }
 
 int main() {
