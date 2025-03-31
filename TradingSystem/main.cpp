@@ -1,6 +1,8 @@
 #include "gmock/gmock.h"
 #include "AutoTradingSystem.cpp"
 #include <string>
+
+using namespace testing;
 using namespace std;
 
 class KiwerMock : public StockBrocker {
@@ -67,6 +69,23 @@ TEST(TestTradingSystem, TEST_NEMO_SELL) {
 	autoSystem.sell("SAMSUNG", 12000, 3);
 }
 
+TEST(TestTradingSystem, TEST_KIWER_GET_PRICE) {
+	AutoTradingSystem autoSystem;
+	autoSystem.selectStockBrocker("KIWER");
+	KiwerMock testMock;
+	EXPECT_CALL(testMock, getPrice("SAMSUNG")).Times(1).WillOnce(Return(3000));
+
+	EXPECT_EQ(3000, autoSystem.getPrice("SAMSUNG"));
+}
+
+TEST(TestTradingSystem, TEST_NEMO_GET_PRICE) {
+	AutoTradingSystem autoSystem;
+	autoSystem.selectStockBrocker("NEMO");
+	NemoMock testMock;
+	EXPECT_CALL(testMock, getPrice("SAMSUNG")).Times(1).WillOnce(Return(3000));
+
+	EXPECT_EQ(3000, autoSystem.getPrice("SAMSUNG"));
+}
 
 
 int main() {
