@@ -1,19 +1,16 @@
 #include "gmock/gmock.h"
+#include "stockbrocker.cpp"
 
 TEST(TestTradingSystem, TEST_KIWER_LOGIN) {
-	StockBrocker brocker;
-	brocker.selectStockBrocker("KIWER");
-	AutoTradingSystem tradingSystem{ &brocker };
-	
-	EXPECT_NO_THROW(tradingSystem.login("USER", "PASSWORD"));
+	AutoTradingSystem autoSystem;
+	autoSystem.selectStockBrocker("KIWER");
+	EXPECT_NO_THROW(autoSystem.login("USER", "PASSWORD"));
 }
 
 TEST(TestTradingSystem, TEST_NEMO_LOGIN) {
-	StockBrocker brocker;
-	brocker.selectStockBrocker("NEMO");
-	AutoTradingSystem tradingSystem{ &brocker };
-
-	EXPECT_NO_THROW(tradingSystem.certification("USER", "PASSWORD"));
+	AutoTradingSystem autoSystem;
+	autoSystem.selectStockBrocker("NEMO");
+	EXPECT_NO_THROW(autoSystem.login("USER", "PASSWORD"));
 }
 
 int main() {
