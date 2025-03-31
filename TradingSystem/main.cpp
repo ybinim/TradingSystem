@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "stockbrocker.cpp"
+#include "AutoTradingSystem.cpp"
 
 TEST(TestTradingSystem, TEST_KIWER_LOGIN) {
 	AutoTradingSystem autoSystem;
