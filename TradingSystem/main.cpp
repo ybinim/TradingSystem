@@ -21,19 +21,32 @@ public:
 	MOCK_METHOD(int, getPrice, (string code), (override));
 };
 
-TEST(TestTradingSystem, TEST_KIWER_LOGIN) {
+class TradingSystemFixture : public testing::Test {
+public:
 	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("KIWER");
+	NemoMock testMock;
+
+	void selectStockBrocker(string type) {
+		if (type == "KIWER") {
+			autoSystem.selectStockBrocker("KIWER");
+		}
+		else if (type == "NEMO") {
+			autoSystem.selectStockBrocker("NEMO");
+		}
+	}
+};
+
+TEST_F(TradingSystemFixture, TEST_KIWER_LOGIN) {
+	selectStockBrocker("KIWER");
 	EXPECT_NO_THROW(autoSystem.login("USER", "PASSWORD"));
 }
 
-TEST(TestTradingSystem, TEST_NEMO_LOGIN) {
-	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("NEMO");
+TEST_F(TradingSystemFixture, TEST_NEMO_LOGIN) {
+	selectStockBrocker("NEMO");
 	EXPECT_NO_THROW(autoSystem.login("USER", "PASSWORD"));
 }
 
-TEST(TestTradingSystem, TEST_KIWER_BUY) {
+TEST_F(TradingSystemFixture, TEST_KIWER_BUY) {
 	KiwerMock testMock;
 	EXPECT_CALL(testMock, buy("SAMSUNG", 10000, 3)).Times(1);
 
@@ -42,50 +55,42 @@ TEST(TestTradingSystem, TEST_KIWER_BUY) {
 	autoSystem.buy("SAMSUNG", 10000, 3);
 }
 
-TEST(TestTradingSystem, TEST_NEMO_BUY) {
+TEST_F(TradingSystemFixture, TEST_NEMO_BUY) {
 	NemoMock testMock;
+
 	EXPECT_CALL(testMock, buy("SAMSUNG", 10000, 3)).Times(1);
 
 	AutoTradingSystem autoSystem{ &testMock };
 	autoSystem.buy("SAMSUNG", 10000, 3);
 }
 
-TEST(TestTradingSystem, TEST_KIWER_SELL) {
-	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("KIWER");
-	KiwerMock testMock;
+TEST_F(TradingSystemFixture, TEST_KIWER_SELL) {
+	selectStockBrocker("KIWER");
 	EXPECT_CALL(testMock, sell("SAMSUNG", 12000, 3)).Times(1);
 
 	autoSystem.sell("SAMSUNG", 12000, 3);
 }
 
-TEST(TestTradingSystem, TEST_NEMO_SELL) {
-	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("NEMO");
-	NemoMock testMock;
+TEST_F(TradingSystemFixture, TEST_NEMO_SELL) {
+	selectStockBrocker("NEMO");
 	EXPECT_CALL(testMock, sell("SAMSUNG", 12000, 3)).Times(1);
 
 	autoSystem.sell("SAMSUNG", 12000, 3);
 }
 
-TEST(TestTradingSystem, TEST_KIWER_GET_PRICE) {
-	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("KIWER");
-	KiwerMock testMock;
+TEST_F(TradingSystemFixture, TEST_KIWER_GET_PRICE) {
+	selectStockBrocker("KIWER");
 	EXPECT_CALL(testMock, getPrice("SAMSUNG")).Times(1).WillOnce(Return(3000));
 
 	EXPECT_EQ(3000, autoSystem.getPrice("SAMSUNG"));
 }
 
-TEST(TestTradingSystem, TEST_NEMO_GET_PRICE) {
-	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("NEMO");
-	NemoMock testMock;
+TEST_F(TradingSystemFixture, TEST_NEMO_GET_PRICE) {
+	selectStockBrocker("NEMO");
 	EXPECT_CALL(testMock, getPrice("SAMSUNG")).Times(1).WillOnce(Return(3000));
 
 	EXPECT_EQ(3000, autoSystem.getPrice("SAMSUNG"));
 }
-
 
 int main() {
 	::testing::InitGoogleMock();
