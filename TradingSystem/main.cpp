@@ -34,20 +34,19 @@ TEST(TestTradingSystem, TEST_NEMO_LOGIN) {
 }
 
 TEST(TestTradingSystem, TEST_KIWER_BUY) {
-	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("KIWER");
 	KiwerMock testMock;
 	EXPECT_CALL(testMock, buy("SAMSUNG", 10000, 3)).Times(1);
+
+	AutoTradingSystem autoSystem{ &testMock };
 
 	autoSystem.buy("SAMSUNG", 10000, 3);
 }
 
 TEST(TestTradingSystem, TEST_NEMO_BUY) {
-	AutoTradingSystem autoSystem;
-	autoSystem.selectStockBrocker("NEMO");
 	NemoMock testMock;
 	EXPECT_CALL(testMock, buy("SAMSUNG", 10000, 3)).Times(1);
 
+	AutoTradingSystem autoSystem{ &testMock };
 	autoSystem.buy("SAMSUNG", 10000, 3);
 }
 
