@@ -9,7 +9,7 @@ public:
 
 	}
 
-	void but(string code, int price, int count) override
+	void buy(string code, int price, int count) override
 	{
 
 	}
