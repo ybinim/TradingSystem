@@ -47,16 +47,20 @@ TEST_F(TradingSystemFixture, TEST_NEMO_LOGIN) {
 }
 
 TEST_F(TradingSystemFixture, TEST_KIWER_BUY) {
-	selectStockBrocker("KIWER");
+	KiwerMock testMock;
 	EXPECT_CALL(testMock, buy("SAMSUNG", 10000, 3)).Times(1);
+
+	AutoTradingSystem autoSystem{ &testMock };
 
 	autoSystem.buy("SAMSUNG", 10000, 3);
 }
 
 TEST_F(TradingSystemFixture, TEST_NEMO_BUY) {
-	selectStockBrocker("NEMO");
+	NemoMock testMock;
+
 	EXPECT_CALL(testMock, buy("SAMSUNG", 10000, 3)).Times(1);
 
+	AutoTradingSystem autoSystem{ &testMock };
 	autoSystem.buy("SAMSUNG", 10000, 3);
 }
 
@@ -87,7 +91,6 @@ TEST_F(TradingSystemFixture, TEST_NEMO_GET_PRICE) {
 
 	EXPECT_EQ(3000, autoSystem.getPrice("SAMSUNG"));
 }
-
 
 int main() {
 	::testing::InitGoogleMock();

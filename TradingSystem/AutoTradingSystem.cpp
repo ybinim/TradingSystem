@@ -11,6 +11,14 @@ using namespace std;
 class AutoTradingSystem
 {
 public:
+	AutoTradingSystem()
+	{
+	}
+
+	AutoTradingSystem(StockBrocker* broker) : myBrocker(broker)
+	{
+	}
+
 	void selectStockBrocker(string name)
 	{
 		if (name == "KIWER")
@@ -30,6 +38,11 @@ public:
 	void login(string id, string pass)
 	{
 		myBrocker->login(id, pass);
+	}
+
+	void buy(string code, int price, int count)
+	{
+		myBrocker->buy(code, price, count);
 	}
 
 private:
