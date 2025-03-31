@@ -44,7 +44,12 @@ public:
 	{
 		myBrocker->buy(code, price, count);
 	}
-
+  
+	void sell(string code, int price, int count)
+	{
+		myBrocker->sell(code, price, count);
+  }
+  
 private:
 	StockBrocker* myBrocker;
 	KiwerDriver kiwer;

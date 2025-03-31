@@ -65,16 +65,20 @@ TEST_F(TradingSystemFixture, TEST_NEMO_BUY) {
 }
 
 TEST_F(TradingSystemFixture, TEST_KIWER_SELL) {
-	selectStockBrocker("KIWER");
+	KiwerMock testMock;
 	EXPECT_CALL(testMock, sell("SAMSUNG", 12000, 3)).Times(1);
+
+	AutoTradingSystem autoSystem{ &testMock };
 
 	autoSystem.sell("SAMSUNG", 12000, 3);
 }
 
 TEST_F(TradingSystemFixture, TEST_NEMO_SELL) {
-	selectStockBrocker("NEMO");
+	NemoMock testMock;
+
 	EXPECT_CALL(testMock, sell("SAMSUNG", 12000, 3)).Times(1);
 
+	AutoTradingSystem autoSystem{ &testMock };
 	autoSystem.sell("SAMSUNG", 12000, 3);
 }
 
